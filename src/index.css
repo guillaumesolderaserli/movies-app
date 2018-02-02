@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+a.navbar-brand {
+  line-height: 32px;
+}
+
+.navbar-brand img {
+  margin-right: 10px;
+}
+
+.movies-app header {
+  margin-bottom: 20px
+}
+
+.movie.card img {
+  width: 350px;
+  margin: 0 auto;
+}
