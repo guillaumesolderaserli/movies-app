@@ -12,11 +12,22 @@ a.navbar-brand {
   margin-right: 10px;
 }
 
-.movies-app header {
+.movies-app nav {
   margin-bottom: 20px
 }
 
 .movie.card img {
   width: 350px;
   margin: 0 auto;
+}
+
+.movies-pagination .page-link {
+  border: none;
+}
+.movies-pagination span.page-link {
+  color:inherit;
+  cursor: default !important;
+}
+.movies-pagination span.page-link:hover {
+  background: none;
 }
