@@ -14,7 +14,7 @@ export class Movies extends Component {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    this.props.next();
+    this.props.previous();
     e.target.blur();
   }
 
@@ -29,23 +29,25 @@ export class Movies extends Component {
             {this.props.movies.total_results} films &quot;{this.props.genre.name}&quot;
           </h3>
         )}
-        <ul className="list-group">
-        {
-          this.props.movies.results.map(movie => {
-            const activeClass = this.props.selected === movie.id ? ' active' : ''
-            return (
-                <li
-                  key={movie.id}
-                  className={`list-group-item d-flex justify-content-between align-items-center${activeClass}`}
-                  onClick={e => this.props.onSelect(movie.id)}
-                >
-                  {movie.title}
-                  <span className="badge-pill">{movie.release_date}</span>
-                </li>
-            )
-          })
-        }
-        </ul>
+        <div className="items-container">
+          <ul className="list-group">
+          {
+            this.props.movies.results.map(movie => {
+              const activeClass = this.props.selected === movie.id ? ' active' : ''
+              return (
+                  <li
+                    key={movie.id}
+                    className={`list-group-item d-flex justify-content-between align-items-center${activeClass}`}
+                    onClick={e => this.props.onSelect(movie.id)}
+                  >
+                    {movie.title}
+                    <span className="badge-pill">{movie.release_date}</span>
+                  </li>
+              )
+            })
+          }
+          </ul>
+        </div>
         <div className="container">
           <div className="row movies-pagination">
             <div className="col-sm-4 text-center">

@@ -12,6 +12,25 @@ a.navbar-brand {
   margin-right: 10px;
 }
 
+.navbar .breadcrumb {
+  line-height: 1.2;
+  margin-bottom: 0px;
+  margin-top: 2px;
+  background: none;
+  margin-left: 10px;
+  font-size: 1.25rem;
+}
+
+.breadcrumb-item.active a {
+  text-decoration: underline;
+  color: #868e96
+}
+
+div.items-container {
+  max-height: calc(100vh - 190px);
+  overflow-y: scroll;
+}
+
 .movies-app nav {
   margin-bottom: 20px
 }
@@ -30,4 +49,30 @@ a.navbar-brand {
 }
 .movies-pagination span.page-link:hover {
   background: none;
+}
+
+@media (max-width: 992px) { 
+  .genres .movies-container {
+    display: none;
+  }
+
+  .genres .movie-container {
+    display: none;
+  }
+
+  .movies .genres-container {
+    display: none;
+  }
+
+  .movies .movie-container {
+    display: none;
+  }
+
+  .movie .genres-container {
+    display: none;
+  }
+
+  .movie .movies-container {
+    display: none;
+  }
 }

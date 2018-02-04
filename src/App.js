@@ -17,11 +17,11 @@ import {
 class App extends Component {
 
   state = {
-    genres: [],
-    selectedGenre: undefined,
+    genres: undefined,
+    genre: undefined,
     movies: undefined,
-    selectedMovie: undefined,
     movie: undefined,
+    page: 'genres'
   }
 
   componentDidMount() {
@@ -38,9 +38,9 @@ class App extends Component {
     .then(data => {
       this.setState({
         movies: data,
-        selectedGenre: genre,
+        genre: genre,
         movie: undefined,
-        selectedMovie: undefined
+        page:'movies',
       })
     })
   }
@@ -50,8 +50,30 @@ class App extends Component {
     .then(movie => {
       this.setState({
         movie,
-        selectedMovie: movieId
+        page: 'movie'
       })
+    })
+  }
+
+  onHomeLink = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    this.setState({
+      page: 'genres',
+      movies: undefined,
+      movie: undefined,
+      genre: undefined
+    })
+  }
+
+  onGenreLink = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    this.setState({
+      page: 'movies',
+      movie: undefined
     })
   }
 
@@ -59,7 +81,7 @@ class App extends Component {
     if (e && e.preventDefault) {
       e.preventDefault()
     }
-    fetchMovies(this.state.selectedGenre.id, this.state.movies.page - 1)
+    fetchMovies(this.state.genre.id, this.state.movies.page - 1)
     .then(data => {
       this.setState({
         movies: data,
@@ -73,29 +95,28 @@ class App extends Component {
     if (e && e.preventDefault) {
       e.preventDefault()
     }
-    fetchMovies(this.state.selectedGenre.id, this.state.movies.page + 1)
+    fetchMovies(this.state.genre.id, this.state.movies.page + 1)
     .then(data => {
       this.setState({
         movies: data,
         movie: undefined,
-        selectedMovie: undefined
       })
     })
   }
 
   render() {
     return (
-      <div className="movies-app">
-        <Header />
+      <div className={`movies-app ${this.state.page}`}>
+        <Header homeLink={this.onHomeLink} genreLink={this.onGenreLink} genre={this.state.genre} movie={this.state.movie}/>
         <div className="container-fluid">
           <div className="row">
-            <div className="col-sm-12 col-lg-4">
-              <Genres genres={this.state.genres} selected={this.state.selectedGenre} onSelect={this.onGenreSelect}/>
+            <div className="col-sm-12 col-lg-4 genres-container">
+              <Genres genres={this.state.genres} selected={this.state.genre} onSelect={this.onGenreSelect}/>
             </div>
-            <div className="col-sm-12 col-lg-4">
-              <Movies genre={this.state.selectedGenre} movies={this.state.movies} previous={this.previousPage} next={this.nextPage} selected={this.state.selectedMovie} onSelect={this.onMovieSelect}/>
+            <div className="col-sm-12 col-lg-4 movies-container">
+              <Movies genre={this.state.genre} movies={this.state.movies} previous={this.previousPage} next={this.nextPage} selected={this.state.movie ? this.state.movie.id : undefined} onSelect={this.onMovieSelect}/>
             </div>
-            <div className="col-sm-12 col-lg-4">
+            <div className="col-sm-12 col-lg-4 movie-container">
               <Movie movie={this.state.movie}/>
             </div>
           </div>
