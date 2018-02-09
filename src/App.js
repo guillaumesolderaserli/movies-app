@@ -11,7 +11,8 @@ import {
   Header,
   Genres,
   Movies,
-  Movie
+  Movie,
+  Modal
 } from './components';
 
 class App extends Component {
@@ -21,7 +22,8 @@ class App extends Component {
     genre: undefined,
     movies: undefined,
     movie: undefined,
-    page: 'genres'
+    page: 'genres',
+    showModal: false,
   }
 
   componentDidMount() {
@@ -29,6 +31,11 @@ class App extends Component {
     .then(genres => {
       this.setState({
         genres
+      })
+    })
+    .catch(() => {
+      this.setState({
+        showModal: true
       })
     })
   }
@@ -43,6 +50,11 @@ class App extends Component {
         page:'movies',
       })
     })
+    .catch(() => {
+      this.setState({
+        showModal: true
+      })
+    })
   }
 
   onMovieSelect = (movieId) => {
@@ -51,6 +63,11 @@ class App extends Component {
       this.setState({
         movie,
         page: 'movie'
+      })
+    })
+    .catch(() => {
+      this.setState({
+        showModal: true
       })
     })
   }
@@ -89,6 +106,11 @@ class App extends Component {
         selectedMovie: undefined
       })
     })
+    .catch(() => {
+      this.setState({
+        showModal: true
+      })
+    })
   }
 
   nextPage = (e) => {
@@ -102,11 +124,26 @@ class App extends Component {
         movie: undefined,
       })
     })
+    .catch(() => {
+      this.setState({
+        showModal: true
+      })
+    })
+  }
+
+  closeModal = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    this.setState({
+      showModal: false
+    })
   }
 
   render() {
     return (
       <div className={`movies-app ${this.state.page}`}>
+        {this.state.showModal && <Modal show={this.state.showModal} close={this.closeModal}/>}
         <Header homeLink={this.onHomeLink} genreLink={this.onGenreLink} genre={this.state.genre} movie={this.state.movie}/>
         <div className="container-fluid">
           <div className="row">
